@@ -75,7 +75,7 @@
 
 					<archive>
 						<manifest>
-							<mainClass>edu.harrisburgu.cisc525.app.Main</mainClass>
+							<mainClass>com.drkiettran.mapreduce.WordCount</mainClass>
 						</manifest>
 					</archive>
 

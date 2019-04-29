@@ -13,6 +13,13 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+/**
+ * Let's see if we could wordcount to work. This is a classic
+ * program that is used for concept of mapreduce programming.
+ * 
+ * https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
+ * 
+ */
 public class WordCount {
 
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
