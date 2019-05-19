@@ -7,13 +7,22 @@ After setting up and startup the local dfs, visit this url:
 `localhost:9870` and this url for yarn: 
 `http://localhost:8088` 
 
+*** Note: If you run in to 'lock' problem, may want to delete temporary file in /tmp folder
+
 I used the following information to create user for mapreduce jobs:
 
 ```
   cd /usr/local/hadoop
+  hadoop namenode &
+  hadoop datanode &
+  sbin/start-yarn.sh
 
   bin/hdfs dfs -mkdir /user
   bin/hdfs dfs -mkdir /user/student
+  bin/hdfs dfs -mkdir /user/student/shakespear
+  cd ~/dev/week_8/java-code/mapreduce
+  bin/hdfs dfs -put src/main/resources/tragedy/*.txt shakespear
+  bin/hdfs dfs -ls /user/student/shakespear
 
 ```
 
@@ -38,6 +47,12 @@ mvn clean package
 
 ```bash
 hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar /user/student/shakespeare /user/student/shakespeare/output
+```
+
+## Clear output:
+```
+hadoop dfs -rm output/*
+hadoop dfs -rmdir output
 ```
 
 ## Report
