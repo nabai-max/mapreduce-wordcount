@@ -12,6 +12,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Let's see if we could wordcount to work. This is a classic
@@ -23,12 +25,15 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class WordCount {
 
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
+		private static final Logger LOGGER = LoggerFactory.getLogger(TokenizerMapper.class);
 
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
 		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 			StringTokenizer itr = new StringTokenizer(value.toString());
+			LOGGER.info("context: {}", context.getInputSplit());
+			System.out.println(" MY LOGGING ... ");
 			while (itr.hasMoreTokens()) {
 				word.set(itr.nextToken());
 				context.write(word, one);

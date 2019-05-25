@@ -13,6 +13,7 @@ I used the following information to create user for mapreduce jobs:
 
 ```
   cd /usr/local/hadoop
+  hdfs namenode -format
   hadoop namenode &
   hadoop datanode &
   sbin/start-yarn.sh
