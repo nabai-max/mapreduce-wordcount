@@ -20,10 +20,10 @@ I used the following information to create user for mapreduce jobs:
 
   bin/hdfs dfs -mkdir /user
   bin/hdfs dfs -mkdir /user/student
-  bin/hdfs dfs -mkdir /user/student/shakespear
+  bin/hdfs dfs -mkdir /user/student/shakespeare
   cd ~/dev/week_8/java-code/mapreduce
-  bin/hdfs dfs -put src/main/resources/tragedy/*.txt shakespear
-  bin/hdfs dfs -ls /user/student/shakespear
+  bin/hdfs dfs -put src/main/resources/tragedy/*.txt shakespeare
+  bin/hdfs dfs -ls /user/student/shakespeare
 
 ```
 
