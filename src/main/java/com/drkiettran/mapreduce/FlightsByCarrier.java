@@ -1,5 +1,6 @@
 package com.drkiettran.mapreduce;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -9,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class FlightsByCarrier {
 	public static void main(String[] args) throws Exception {
-		Job job = new Job();
+		Job job = Job.getInstance();
 		job.setJarByClass(FlightsByCarrier.class);
 		job.setJobName("FlightsByCarrier");
 

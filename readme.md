@@ -9,21 +9,22 @@ After setting up and startup the local dfs, visit this url:
 
 *** Note: If you run in to 'lock' problem, may want to delete temporary file in /tmp folder
 
-I used the following information to create user for mapreduce jobs:
+I used the following information to create user for mapreduce WordCount:
 
 ```
   cd /usr/local/hadoop
+  
   hdfs namenode -format
   hadoop namenode &
   hadoop datanode &
   sbin/start-yarn.sh
 
-  bin/hdfs dfs -mkdir /user
-  bin/hdfs dfs -mkdir /user/student
-  bin/hdfs dfs -mkdir /user/student/shakespeare
+  hdfs dfs -mkdir /user
+  hdfs dfs -mkdir /user/student
+  hdfs dfs -mkdir /user/student/shakespeare
   cd ~/dev/week_8/java-code/mapreduce
-  bin/hdfs dfs -put src/main/resources/tragedy/*.txt shakespeare
-  bin/hdfs dfs -ls /user/student/shakespeare
+  hdfs dfs -put src/main/resources/tragedy/*.txt shakespeare
+  hdfs dfs -ls /user/student/shakespeare
 
 ```
 
