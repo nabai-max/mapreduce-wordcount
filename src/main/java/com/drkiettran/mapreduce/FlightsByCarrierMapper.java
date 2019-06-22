@@ -9,6 +9,9 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import au.com.bytecode.opencsv.CSVParser;
 
+/*
+ * Extracted from Hadoop for Dummies (2014)
+ */
 public class FlightsByCarrierMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	@Override
 	protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {

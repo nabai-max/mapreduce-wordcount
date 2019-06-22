@@ -1,9 +1,12 @@
 package com.drkiettran.mapreduce;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -16,8 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Let's see if we could wordcount to work. This is a classic
- * program that is used for concept of mapreduce programming.
+ * Let's see if we could wordcount to work. This is a classic program that is
+ * used for concept of mapreduce programming.
  * 
  * https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
  * 
@@ -55,6 +58,27 @@ public class WordCount {
 		}
 	}
 
+	/**
+	 * Reading result file store as part-r-0000
+	 * 
+	 * @param resultFile
+	 * @throws IOException
+	 */
+	private static void printResult(String resultFile) throws IOException {
+		String partFile = String.format("hdfs:%s/part-r-00000", resultFile);
+		Path pt = new Path(partFile);// Location of file in HDFS
+		FileSystem fs = FileSystem.get(new Configuration());
+		BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(pt)));
+		String line;
+		line = br.readLine();
+		while (line != null) {
+			System.out.println(line);
+			line = br.readLine();
+		}
+		br.close();
+		fs.close();
+	}
+
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "word count");
@@ -66,6 +90,8 @@ public class WordCount {
 		job.setOutputValueClass(IntWritable.class);
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		int result = job.waitForCompletion(true) ? 0 : 1;
+		//		printResult(args[1]);
+		System.exit(result);
 	}
 }
