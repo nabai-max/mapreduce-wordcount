@@ -11,56 +11,87 @@ After setting up and startup the local dfs, visit this url:
 
 I used the following information to create user for mapreduce WordCount:
 
-```
-  cd /usr/local/hadoop
-  
-  hdfs namenode -format
-  hadoop namenode &
-  hadoop datanode &
-  sbin/start-yarn.sh
+## Start Hadoop
 
-  hdfs dfs -mkdir /user
-  hdfs dfs -mkdir /user/student
-  hdfs dfs -mkdir /user/student/shakespeare
-  cd ~/dev/week_8/java-code/mapreduce
-  hdfs dfs -put src/main/resources/tragedy/*.txt shakespeare
-  hdfs dfs -ls /user/student/shakespeare
+```
+hdfs namenode –format
+cd /usr/local/hadoop/sbin
+./start-all.sh
+
+jpsOutput:
+XXXX SecondaryNameNode
+XXXX DataNode
+XXXX NodeManager
+XXXX NameNode
+XXXX ResourceManager
+XXXX Jps
+```
+
+## Word Count program
+
+### Preparation directory structure:
+```
+hdfs dfs -mkdir /user/
+hdfs dfs -mkdir /user/student
+hdfs dfs -mkdir /user/student/shakespeare
 
 ```
 
 Trouble with the run.
 
-updated mapred-site.xml
+### updated mapred-site.xml
+```
+<configuration>
+        <property>
+                <name>mapreduce.framework.name</name>
+                <value>yarn</value>
+        </property>
+        <property>
+                <name>yarn.app.mapreduce.am.env</name>
+                <value>HADOOP_MAPRED_HOME=$HADOOP_HOME</value>
+                </property>
+        <property>
+                <name>mapreduce.map.env</name>
+                <value>HADOOP_MAPRED_HOME=$HADOOP_HOME</value>
+        </property>
+        <property>
+                <name>mapreduce.reduce.env</name>
+                <value>HADOOP_MAPRED_HOME=$HADOOP_HOME</value>
+        </property>
 
-hdfs dfs -rm input/shellprofile.d
+</configuration>
 
-## Running Classic WordCount program
+```
+
+### Running Classic WordCount program
+
 Program is located here: `https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html`
 
 Text: Romeo and Juliet located here: `http://shakespeare.mit.edu/romeo_juliet/full.html`
 
-## Build
-
+### Clone & Build:cd ~/dev
 ```bash
+git clone https://github.com/drkiettran/mapreduce
+cd mapreduce
 mvn clean package
 ```
 
-## Run
-
-```bash
-hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar /user/student/shakespeare /user/student/shakespeare/output
+### Prepare Input & Run:
+```
+hdfs dfs -copyFromLocal src/main/resources/tragedy/* /user/student/shakespeare
+hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.WordCount /user/student/shakespeare /user/student/shakespeare/output/shakespeare/output
 ```
 
-## Clear output:
+### Clear output:
 ```
 hadoop dfs -rm output/*
 hadoop dfs -rmdir output
 ```
 
-## Report
+### Result:
+```
+hdfs dfs -cat /user/student/shakespeare/output/part-r-00000 
 
-```bash
-hdfs dfs -cat /user/student/shakespeare/output/part-r-00000
 ```
 
 ## Hive Getting started:
@@ -124,4 +155,30 @@ Need to have mysql-connector-java-5.1.47.jar stored in ~/hive/lib folder
  	</property>
 
 </configuration>
+```
+## Sample code for 'phrase count'
+
+```java
+	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
+		private static final Logger LOGGER = LoggerFactory.getLogger(TokenizerMapper.class);
+
+		private final static IntWritable one = new IntWritable(1);
+
+		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+			StringTokenizer itr = new StringTokenizer(value.toString());
+			Text word = new Text();
+			Text lastWord = new Text("");
+			Text twoWords = new Text();
+
+			while (itr.hasMoreTokens()) {
+				word.set(itr.nextToken());
+				twoWords.set(lastWord.copyBytes());
+				twoWords.append(" ".getBytes(), 0, 1);
+				twoWords.append(word.copyBytes(), 0, word.getLength());
+				context.write(twoWords, one);
+				lastWord.set(word.copyBytes());
+			}
+		}
+	}
+
 ```
