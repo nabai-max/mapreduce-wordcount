@@ -26,17 +26,16 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class WordCount {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(TokenizerMapper.class);
+	private static final IntWritable one = new IntWritable(1);
+	
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
-		private static final Logger LOGGER = LoggerFactory.getLogger(TokenizerMapper.class);
-
-		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
+		@Override
 		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 			StringTokenizer itr = new StringTokenizer(value.toString());
 			LOGGER.info("context: {}", context.getInputSplit());
-			System.out.println(" MY LOGGING ... ");
 			while (itr.hasMoreTokens()) {
 				word.set(itr.nextToken());
 				context.write(word, one);
@@ -47,6 +46,7 @@ public class WordCount {
 	public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 		private IntWritable result = new IntWritable();
 
+		@Override
 		public void reduce(Text key, Iterable<IntWritable> values, Context context)
 				throws IOException, InterruptedException {
 			int sum = 0;
@@ -68,19 +68,29 @@ public class WordCount {
 		String partFile = String.format("hdfs:%s/part-r-00000", resultFile);
 		Path pt = new Path(partFile);// Location of file in HDFS
 		FileSystem fs = FileSystem.get(new Configuration());
-		BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(pt)));
-		String line;
-		line = br.readLine();
-		while (line != null) {
-			System.out.println(line);
+
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(pt)))) {
+			String line;
 			line = br.readLine();
+			while (line != null) {
+				System.out.println(line);
+				line = br.readLine();
+			}
+		} finally {
+			fs.close();
 		}
-		br.close();
-		fs.close();
+	}
+
+	private static void deleteOutputFolder(String folder) throws IOException {
+		FileSystem fs = FileSystem.get(new Configuration());
+		Path path = new Path(folder);
+		fs.delete(path, true);
 	}
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
+		deleteOutputFolder(args[1]);
+
 		Job job = Job.getInstance(conf, "word count");
 		job.setJarByClass(WordCount.class);
 		job.setMapperClass(TokenizerMapper.class);
@@ -88,10 +98,12 @@ public class WordCount {
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
+
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
 		int result = job.waitForCompletion(true) ? 0 : 1;
-		//		printResult(args[1]);
+//		printResult(args[1]);
 		System.exit(result);
 	}
 }
