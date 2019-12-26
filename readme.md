@@ -162,3 +162,16 @@ To stop:
 ```shell script
 ./mapred --daemon stop historyserver
 ```
+
+
+## Flights by Carriers application.
+This is another MR application that processes the ariline performance data provided by this website
+`http://stat-computing.org/`. The field of interest is UniqueCarrier, located at the 8th element of the 
+input file. Below is the sample data from `1985.csv` file.
+ 
+Year | Month | DayofMonth | DayOfWeek | DepTime | CRSDepTime | ArrTime | CRSArrTime | **UniqueCarrier** | FlightNum | TailNum | ActualElapsedTime | CRSElapsedTime | AirTime | ArrDelay | DepDelay | Origin | Dest | Distance | TaxiIn | TaxiOut | Cancelled | CancellationCode | Diverted | CarrierDelay | WeatherDelay | NASDelay | SecurityDelay | LateAircraftDelay
+--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---
+1987 | 10 | 14 | 3 | 741 | 730 | 912 | 849 | **PS** | 1451 | NA | 91 | 79 | NA | 23 | 11 | SAN | SFO | 447 | NA | NA | 0 | NA | 0 | NA | NA | NA | NA | NA
+
+The process of building, running, and troubleshooting is identical to that of the Word Count application
+explained earlier in this document.
