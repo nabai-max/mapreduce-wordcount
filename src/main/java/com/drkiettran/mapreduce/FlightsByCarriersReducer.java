@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.Reducer;
  * Extracted from Hadoop for Dummies (2014)
  *
  */
-public class FlightsByCarrierReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+public class FlightsByCarriersReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 	@Override
 	protected void reduce(Text token, Iterable<IntWritable> counts, Context context)
 			throws IOException, InterruptedException {

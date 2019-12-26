@@ -12,7 +12,7 @@ import au.com.bytecode.opencsv.CSVParser;
 /*
  * Extracted from Hadoop for Dummies (2014)
  */
-public class FlightsByCarrierMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class FlightsByCarriersMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	@Override
 	protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 		if (key.get() > 0) {

@@ -21,8 +21,8 @@ public class FlightsByCarrier {
 		TextInputFormat.addInputPath(job, new Path(args[0]));
 		job.setInputFormatClass(TextInputFormat.class);
 
-		job.setMapperClass(FlightsByCarrierMapper.class);
-		job.setReducerClass(FlightsByCarrierReducer.class);
+		job.setMapperClass(FlightsByCarriersMapper.class);
+		job.setReducerClass(FlightsByCarriersReducer.class);
 
 		TextOutputFormat.setOutputPath(job, new Path(args[1]));
 		job.setOutputFormatClass(TextOutputFormat.class);
