@@ -42,7 +42,7 @@ public class WordCount {
     }
 
     public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
-        private static final Logger LOGGER = LoggerFactory.getLogger(TokenizerMapper.class);
+        private static final Logger LOGGER = LoggerFactory.getLogger(IntSumReducer.class);
         private IntWritable result = new IntWritable();
 
         @Override
