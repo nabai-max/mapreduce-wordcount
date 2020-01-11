@@ -52,7 +52,7 @@ hdfs dfs -cat /tmp/othello/part-r-00000
 If you want to copy the result into a local file, provide a location of the local file to be copied.
 ```shell script
 hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.WordCount \
-       /user/student/shakespeare/tragedy/othello.txt /tmp/othello /tmp/othello_result.txt
+       /user/student/shakespeare/tragedy/othello.txt /tmp/othello /tmp/othello
 ```
 The local file that hold the result is located at `/tmp/othello_result.txt`. To show the content on screen,
 
@@ -170,8 +170,18 @@ This is another MR application that processes the ariline performance data provi
 input file. Below is the sample data from `1985.csv` file.
  
 Year | Month | DayofMonth | DayOfWeek | DepTime | CRSDepTime | ArrTime | CRSArrTime | **UniqueCarrier** | FlightNum | TailNum | ActualElapsedTime | CRSElapsedTime | AirTime | ArrDelay | DepDelay | Origin | Dest | Distance | TaxiIn | TaxiOut | Cancelled | CancellationCode | Diverted | CarrierDelay | WeatherDelay | NASDelay | SecurityDelay | LateAircraftDelay
---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---
-1987 | 10 | 14 | 3 | 741 | 730 | 912 | 849 | **PS** | 1451 | NA | 91 | 79 | NA | 23 | 11 | SAN | SFO | 447 | NA | NA | 0 | NA | 0 | NA | NA | NA | NA | NA
+---  | ---   | ---        | ---       | ---     | ---        | ---     | ---        | ---           | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---
+1987 | 10    | 14         | 3         | 741     | 730        | 912     | 849        | **PS**            | 1451 | NA | 91 | 79 | NA | 23 | 11 | SAN | SFO | 447 | NA | NA | 0 | NA | 0 | NA | NA | NA | NA | NA
 
 The process of building, running, and troubleshooting is identical to that of the Word Count application
 explained earlier in this document.
+
+### Run
+```shell script
+hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.FlightsByCarriers /user/student/airline/1987.csv /tmp/1987
+```
+
+### Check the output
+```shell script
+hdfs dfs -cat /tmp/1987/part-r-00000
+```
