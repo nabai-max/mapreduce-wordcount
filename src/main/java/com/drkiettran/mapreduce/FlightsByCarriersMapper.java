@@ -6,10 +6,10 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-
-import au.com.bytecode.opencsv.CSVParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import au.com.bytecode.opencsv.CSVParser;
 
 /*
  * Extracted from Hadoop for Dummies (2014)
@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 public class FlightsByCarriersMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     private static final Logger LOGGER = LoggerFactory.getLogger(FlightsByCarriersMapper.class);
     private static final IntWritable ONE = new IntWritable(1);
-
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         /**

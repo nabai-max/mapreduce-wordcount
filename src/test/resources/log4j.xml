@@ -1,0 +1,11 @@
+<log4j:configuration name="com.apress.logging.log4j"
+	additivity="false">
+
+	<appender name="testappender"
+		class="com.drkiettran.mapreduce.TestAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+</log4j:configuration>
