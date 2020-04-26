@@ -185,3 +185,20 @@ hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.ma
 ```shell script
 hdfs dfs -cat /tmp/1987/part-r-00000
 ```
+
+Added Maven Wrapper to the project by running this command:
+
+```
+mvn -N io.takari:maven:0.7.7:wrapper
+```
+
+Subsequent running a build:
+```
+./mvwn clean install
+```
+
+instead of 
+
+```
+mvn clean install
+``
