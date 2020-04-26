@@ -12,17 +12,17 @@ import org.slf4j.LoggerFactory;
  * Extracted from Hadoop for Dummies (2014)
  */
 public class FlightsByCarriersReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlightsByCarriersReducer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FlightsByCarriersReducer.class);
 
-    @Override
-    protected void reduce(Text token, Iterable<IntWritable> counts, Context context)
-            throws IOException, InterruptedException {
-        int sum = 0;
+	@Override
+	protected void reduce(Text token, Iterable<IntWritable> counts, Context context)
+			throws IOException, InterruptedException {
+		int sum = 0;
 
-        for (IntWritable count : counts) {
-            sum += count.get();
-        }
-        context.write(token, new IntWritable(sum));
+		for (IntWritable count : counts) {
+			sum += count.get();
+		}
+		context.write(token, new IntWritable(sum));
 		LOGGER.info("{}: {}", token, sum);
-    }
+	}
 }

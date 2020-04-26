@@ -46,7 +46,6 @@ public class FlightsByCarriersMapperTest {
 		key = new LongWritable(1);
 		fbcm.map(key, text, context);
 		Mockito.verify(context, Mockito.times(1)).write(Mockito.any(Text.class), Mockito.any(IntWritable.class));
-		ArgumentCaptor<Text> captor = ArgumentCaptor.forClass(Text.class);
 	}
 
 	@Test
