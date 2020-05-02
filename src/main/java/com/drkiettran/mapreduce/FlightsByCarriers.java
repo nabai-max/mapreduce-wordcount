@@ -1,5 +1,10 @@
 package com.drkiettran.mapreduce;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -8,9 +13,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-
-import java.io.*;
-import java.util.StringTokenizer;
 
 /**
  * Extracted from Hadoop for Dummies (2014)
@@ -45,6 +47,11 @@ public class FlightsByCarriers {
         fs.delete(path, true);
     }
 
+	/**
+	 * 
+	 * @param argv argv[0]: input path argv[1]; output path
+	 * @throws Exception
+	 */
     public static void main(String[] argv) throws Exception {
         if (argv.length < 2) {
             System.out.println("at least input file/directory and output directory");
@@ -53,7 +60,7 @@ public class FlightsByCarriers {
 
         String inputPath = argv[0];
         String outputPath = argv[1];
-        deleteOutputFolder(outputPath);
+		deleteOutputFolder(outputPath);
 
         Job job = Job.getInstance();
         job.setJarByClass(FlightsByCarriers.class);

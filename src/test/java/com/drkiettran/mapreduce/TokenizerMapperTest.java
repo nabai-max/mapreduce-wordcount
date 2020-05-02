@@ -15,48 +15,52 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-public class FlightsByCarriersMapperTest {
-	private final String CSV_DATA = "1987,10,14,3,741,730,912,849,PS,1451,NA,91,79,NA,23,11,SAN,SFO,447,NA,NA,0,NA,0,NA,NA,NA,NA,NA\n";
+public class TokenizerMapperTest {
+	private final String SHAKESPEARE_DATA = "    We cannot all be masters, nor all masters\n";
 
 	private Context context;
 	private Text text;
 	private LongWritable key;
 
-	private FlightsByCarriersMapper fbcm;
+	private TokenizerMapper tm;
 
 	@BeforeEach
 	public void init() {
 		BasicConfigurator.configure();
 		context = Mockito.mock(Context.class);
-		text = new Text(CSV_DATA);
+		text = new Text("");
 		key = new LongWritable(0);
-		fbcm = new FlightsByCarriersMapper();
+		tm = new TokenizerMapper();
 	}
 
 	@Test
 	public void shouldDoNothing() throws IOException, InterruptedException {
+		FlightsByCarriersMapper fbcm = new FlightsByCarriersMapper();
 		LongWritable key = new LongWritable(0);
 
-		fbcm.map(key, text, context);
+		tm.map(key, text, context);
 	}
 
 	@Test
 	public void shouldContextWrite() throws IOException, InterruptedException {
-		key = new LongWritable(1);
-		fbcm.map(key, text, context);
-		Mockito.verify(context, Mockito.times(1)).write(Mockito.any(Text.class), Mockito.any(IntWritable.class));
+		text = new Text(SHAKESPEARE_DATA);
+		key = new LongWritable(0);
+		tm.map(key, text, context);
+		Mockito.verify(context, Mockito.times(SHAKESPEARE_DATA.trim().split(" ").length)).write(Mockito.any(Text.class),
+				Mockito.any(IntWritable.class));
 	}
 
 	@Test
 	public void shouldWriteTextAndIntWritable() throws IOException, InterruptedException {
 		key = new LongWritable(1);
+		text = new Text("Hello");
 		ArgumentCaptor<Text> textCaptor = ArgumentCaptor.forClass(Text.class);
 		ArgumentCaptor<IntWritable> intWritableCaptor = ArgumentCaptor.forClass(IntWritable.class);
-		fbcm.map(key, text, context);
+		tm.map(key, text, context);
 
 		Mockito.verify(context).write(textCaptor.capture(), intWritableCaptor.capture());
 
-		assertThat(textCaptor.getValue(), is(new Text("PS")));
+		assertThat(textCaptor.getValue(), is(new Text("Hello")));
 		assertThat(intWritableCaptor.getValue(), is(new IntWritable(1)));
 	}
 }
