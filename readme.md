@@ -23,7 +23,7 @@ The Word Count program is from the tutorial on Apache Hadoop website
 
 ## Build
 ```shell script
-mvn clean install
+./mvnw clean install
 ```
 
 ## Running the MapReduce application
@@ -189,16 +189,16 @@ hdfs dfs -cat /tmp/1987/part-r-00000
 Added Maven Wrapper to the project by running this command:
 
 ```
-mvn -N io.takari:maven:0.7.7:wrapper
+./mvnw -N io.takari:maven:0.7.7:wrapper
 ```
 
 Subsequent running a build:
 ```
-./mvwn clean install
+./mvnw clean install
 ```
 
 instead of 
 
 ```
-mvn clean install
+./mvnw clean install
 ``
