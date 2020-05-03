@@ -52,7 +52,8 @@ public class IntSumReducerTest {
 		List<IntWritable> values = new ArrayList<IntWritable>();
 		values.add(new IntWritable(1));
 		isr.reduce(text, values, context);
-
+		textCaptor = ArgumentCaptor.forClass(Text.class);
+		intWritableCaptor = ArgumentCaptor.forClass(IntWritable.class);
 		Mockito.verify(context).write(textCaptor.capture(), intWritableCaptor.capture());
 		assertThat(textCaptor.getValue(), is(text));
 		assertThat(intWritableCaptor.getValue(), is(new IntWritable(1)));
