@@ -1,4 +1,5 @@
 # MapReduce project
+Changed readme.
 This is a Java project that is used for a simple MapReduce Word Count problem.
 
 ## Running Hadoop
