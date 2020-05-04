@@ -18,6 +18,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 /**
  * Let's see if we could wordcount to work. This is a classic program that is
  * used for concept of mapreduce programming.
+ * 
+ * Added comments.
  * <p>
  * https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
  */
