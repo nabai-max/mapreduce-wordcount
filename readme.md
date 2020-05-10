@@ -202,7 +202,7 @@ instead of:
 
 ```
 ./mvnw clean install
-``
+```
 
 ## Miscellaneous:
 
