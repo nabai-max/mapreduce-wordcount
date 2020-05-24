@@ -1,5 +1,4 @@
 # MapReduce project
-Changed readme.
 This is a Java project that is used for a simple MapReduce Word Count problem.
 
 ## Running Hadoop
@@ -256,3 +255,26 @@ Airports:
 - `name` of the airport
 - `city` and country in which airport is located.
 - `lat` and long: the latitude and longitude of the airport
+
+
+Flights By Origin Cities
+1. copied the codes from Flights By Carrier, and changed to flights by origin cities.java, and mapper, reducer accordingly.
+2. Re-run the application for 2000, 2001, and 2002 data
+```
+hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.FlightsByOriginCites /user/student/airline/2000.csv /tmp/2000
+hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.FlightsByOriginCites /user/student/airline/2001.csv /tmp/2001
+hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.FlightsByOriginCites /user/student/airline/2002.csv /tmp/2002
+
+```
+Flights By Departure Cities
+1. copied the codes from Flights By Carrier, and changed to flights by departure cities.java, and mapper, reducer accordingly.
+2. Re-run the application for 2000, 2001, and 2002 data
+```
+hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.FlightsByDepartureCites /user/student/airline/2000.csv /tmp/2000
+hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.FlightsByDepartureCites /user/student/airline/2001.csv /tmp/2001
+hadoop jar target/cisc-525-mapreduce-jar-with-dependencies.jar com.drkiettran.mapreduce.FlightsByDepartureCities /user/student/airline/2002.csv /tmp/2002
+
+```
+
+
+
